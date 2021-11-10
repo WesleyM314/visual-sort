@@ -2,7 +2,8 @@
   "name": "visual-sort",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://wesleym314.github.io/visual-sort/",
+  "homepage": "./",
+  "main": "src/electron.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
@@ -13,16 +14,22 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
+    "electron": "^15.3.1",
+    "electron-forge": "^5.2.4",
+    "foreman": "^3.0.1",
     "gh-pages": "^3.2.3",
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "react-start": "react-scripts start",
+    "start": "nf start -p 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "electron": "electron .",
+    "electron-start": "node src/wait-for-react"
   },
   "eslintConfig": {
     "extends": [
