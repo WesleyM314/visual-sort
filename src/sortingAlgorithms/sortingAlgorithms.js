@@ -115,70 +115,56 @@ function heapify(animations, arr, len, i)
 
 export const mergeSortAnimations = array =>
 {
-	// console.log("START");
-	// console.log(array);
 	const animations = [];
 	const arrCopy = array.slice();
 	let len = arrCopy.length;
 
-	mergeSort(animations, array, arrCopy, 0, len - 1);
-	// console.log("END");
-	// console.log(array);
+	mergeSort(animations, array, 0, len - 1);
 	return animations;
 }
 
-function mergeSort(animations, arr, arrCopy, l, r)
+function mergeSort(animations, arr, l, r)
 {
-	// console.log("MERGE SORT " + arr.slice(l, r + 1));
 	// Base case
 	if (l >= r)
 	{
-		// console.log("BASE CASE");
 		return;
 	}
-	// let m = l + parseInt((r-l)/2);
-	// let m = l + Math.floor((r - l) / 2);
 	let m = Math.floor((l + r) / 2);
-	// console.log(arr.slice(l, m + 1) + " | " + arr.slice(m + 1, r + 1));
 	// Call recursively on each half of arr
-	mergeSort(animations, arr, arrCopy, l, m);
-	mergeSort(animations, arr, arrCopy, m + 1, r);
+	mergeSort(animations, arr, l, m);
+	mergeSort(animations, arr, m + 1, r);
 	// Merge
-	merge(animations, arr, arrCopy, l, m, r);
+	merge(animations, arr, l, m, r);
 }
 
-function merge(animations, arr, arrCopy, l, m, r)
+function merge(animations, arr, l, m, r)
 {
-	// console.log("MERGE " + arr.slice(l, m + 1) + " AND " + arr.slice(m + 1, r + 1));
-	// console.log("MERGE " + arrCopy.slice(l, m + 1) + " AND " + arrCopy.slice(m + 1, r + 1));
-	// console.log(`l: ${l}, m: ${m}, r: ${r}`);
-	// console.log(arr.slice(l, r + 1));
-
 	let arr2 = arr.slice();
 
 	let i = l;
 	let j = m + 1;
 	let k = l;
 
-	while(i <= m && j <= r) {
-		// console.log(`Comparing ${arr2[i]} and ${arr2[j]}`);
-		if(arr2[i] <= arr2[j]) {
+	while (i <= m && j <= r)
+	{
+		if (arr2[i] <= arr2[j])
+		{
 			// If overwriting, add to animations
 			animations.push([k, arr2[i]]);
 			arr[k++] = arr2[i++];
-		} else {
+		} else
+		{
 			animations.push([k, arr2[j]]);
 			arr[k++] = arr2[j++];
 		}
 	}
 
-	while(i <= m) {
+	while (i <= m)
+	{
 		animations.push([k, arr2[i]]);
 		arr[k++] = arr2[i++];
 	}
-
-	// console.log("AFTER MERGE: " + arr.slice(l, r + 1));
-
 }
 
 function swap(arr, a, b)
