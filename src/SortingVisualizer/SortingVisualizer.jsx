@@ -5,6 +5,7 @@ import "../sortingAlgorithms/sortingAlgorithms.js";
 import {
 	bubbleSortAnimations,
 	heapSortAnimations,
+	mergeSortAnimations,
 	selectionSortAnimations,
 } from "../sortingAlgorithms/sortingAlgorithms.js";
 
@@ -12,9 +13,9 @@ import {
 const ANIMATION_SPEED_MS = 0.5;
 
 // Bars in array
-const NUM_ARRAY_BARS = 400;
+const NUM_ARRAY_BARS = 512;
 
-const NUM_COLORS = 100;
+const NUM_COLORS = 400;
 const colorGradient = new Gradient();
 colorGradient.setGradient(
 	"#ff0000",
@@ -53,36 +54,25 @@ export class SortingVisualizer extends React.Component {
 
 	bubbleSort() {
 		const animations = bubbleSortAnimations(this.state.array);
-		// console.log(animations);
-		// Go through animations
-		for (let i = 0; i < animations.length; i++) {
-			const arrBars = document.getElementsByClassName("array-bar");
-			const [idx, val] = animations[i];
-			const barStyle = arrBars[idx].style;
-			const color = colorArr[val]; // New color
-			setTimeout(() => {
-				barStyle.backgroundColor = color;
-			}, i * ANIMATION_SPEED_MS);
-		}
+		this.runAnimations(animations, ANIMATION_SPEED_MS);
 	}
 
 	selectionSort() {
 		const animations = selectionSortAnimations(this.state.array);
-		// Go through animations
-		for (let i = 0; i < animations.length; i++) {
-			const arrBars = document.getElementsByClassName("array-bar");
-			const [idx, val] = animations[i];
-			const barStyle = arrBars[idx].style;
-			const color = colorArr[val]; // New color
-			setTimeout(() => {
-				barStyle.backgroundColor = color;
-			}, i * ANIMATION_SPEED_MS);
-		}
+		this.runAnimations(animations, ANIMATION_SPEED_MS);
 	}
 
 	heapSort() {
 		const animations = heapSortAnimations(this.state.array);
-		// Go through animations
+		this.runAnimations(animations, ANIMATION_SPEED_MS);
+	}
+
+	mergeSort() {
+		const animations = mergeSortAnimations(this.state.array);
+		this.runAnimations(animations, 2);
+	}
+
+	runAnimations(animations, speed) {
 		for (let i = 0; i < animations.length; i++) {
 			const arrBars = document.getElementsByClassName("array-bar");
 			const [idx, val] = animations[i];
@@ -90,7 +80,7 @@ export class SortingVisualizer extends React.Component {
 			const color = colorArr[val]; // New color
 			setTimeout(() => {
 				barStyle.backgroundColor = color;
-			}, i * ANIMATION_SPEED_MS);
+			}, i * speed);
 		}
 	}
 
@@ -106,6 +96,8 @@ export class SortingVisualizer extends React.Component {
 					<button onClick={() => this.bubbleSort()}>Bubble Sort</button>
 					<button onClick={() => this.selectionSort()}>Selection Sort</button>
 					<button onClick={() => this.heapSort()}>Heap Sort</button>
+					<button onClick={() => this.mergeSort()}>Merge Sort</button>
+					<button onClick={() => this.heapSort()}>Quick Sort</button>
 				</div>
 				<div className="array-container">
 					{array.map((value, idx) => (
@@ -114,7 +106,6 @@ export class SortingVisualizer extends React.Component {
 							key={idx}
 							style={{
 								backgroundColor: colorArr[value],
-								// height: `${75}vh`,
 							}}
 						></div>
 					))}
