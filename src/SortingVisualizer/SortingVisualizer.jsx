@@ -1,32 +1,32 @@
 import React from "react";
-import Gradient from "javascript-color-gradient";
-import "./SortingVisualizer.css";
 import "../sortingAlgorithms/sortingAlgorithms.js";
-import {
-	bubbleSortAnimations,
-	heapSortAnimations,
-	selectionSortAnimations,
-} from "../sortingAlgorithms/sortingAlgorithms.js";
+import
+	{
+		bubbleSortAnimations,
+		heapSortAnimations,
+		selectionSortAnimations
+	} from "../sortingAlgorithms/sortingAlgorithms.js";
+import "./SortingVisualizer.css";
 
 // Animation speed
 const ANIMATION_SPEED_MS = 0.5;
 
 // Bars in array
-const NUM_ARRAY_BARS = 400;
+const NUM_ARRAY_BARS = 360;
 
-const NUM_COLORS = 100;
-const colorGradient = new Gradient();
-colorGradient.setGradient(
-	"#ff0000",
-	"#ff6600",
-	"fff200",
-	"10ff00",
-	"00e1ff",
-	"000cff",
-	"ae00ff"
-);
-colorGradient.setMidpoint(NUM_COLORS);
-const colorArr = colorGradient.getArray();
+// const NUM_COLORS = 100;
+// const colorGradient = new Gradient();
+// colorGradient.setGradient(
+// 	"#ff0000",
+// 	"#ff6600",
+// 	"fff200",
+// 	"10ff00",
+// 	"00e1ff",
+// 	"000cff",
+// 	"ae00ff"
+// );
+// colorGradient.setMidpoint(NUM_COLORS);
+// const colorArr = colorGradient.getArray();
 // console.log(colorArr);
 
 export class SortingVisualizer extends React.Component {
@@ -43,11 +43,27 @@ export class SortingVisualizer extends React.Component {
 	}
 
 	resetArray() {
-		const array = [];
-		for (let i = 0; i < NUM_ARRAY_BARS; i++) {
-			array.push(randomIntInRange(0, NUM_COLORS - 1));
-			// array.push(randColor());
+		let array = Array(NUM_ARRAY_BARS)
+			.fill()
+			.map((x, i) => i);
+
+		function shuffle(arr) {
+			let i, j, tmp;
+			for (i = arr.length - 1; i > 0; i--) {
+				j = Math.floor(Math.random() * (i + 1));
+				tmp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = tmp;
+			}
+			return arr;
 		}
+
+		array = shuffle(array);
+
+		// for (let i = 0; i < NUM_ARRAY_BARS; i++) {
+		// 	array.push(randomIntInRange(0, NUM_COLORS - 1));
+		// 	// array.push(randColor());
+		// }
 		this.setState({ array });
 	}
 
@@ -59,7 +75,8 @@ export class SortingVisualizer extends React.Component {
 			const arrBars = document.getElementsByClassName("array-bar");
 			const [idx, val] = animations[i];
 			const barStyle = arrBars[idx].style;
-			const color = colorArr[val]; // New color
+			// const color = colorArr[val]; // New color
+			const color = `hsl(${val}, 100%, 50%)`;
 			setTimeout(() => {
 				barStyle.backgroundColor = color;
 			}, i * ANIMATION_SPEED_MS);
@@ -73,7 +90,8 @@ export class SortingVisualizer extends React.Component {
 			const arrBars = document.getElementsByClassName("array-bar");
 			const [idx, val] = animations[i];
 			const barStyle = arrBars[idx].style;
-			const color = colorArr[val]; // New color
+			// const color = colorArr[val]; // New color
+			const color = `hsl(${val}, 100%, 50%)`;
 			setTimeout(() => {
 				barStyle.backgroundColor = color;
 			}, i * ANIMATION_SPEED_MS);
@@ -87,7 +105,8 @@ export class SortingVisualizer extends React.Component {
 			const arrBars = document.getElementsByClassName("array-bar");
 			const [idx, val] = animations[i];
 			const barStyle = arrBars[idx].style;
-			const color = colorArr[val]; // New color
+			// const color = colorArr[val]; // New color
+			const color = `hsl(${val}, 100%, 50%)`;
 			setTimeout(() => {
 				barStyle.backgroundColor = color;
 			}, i * ANIMATION_SPEED_MS);
@@ -113,7 +132,7 @@ export class SortingVisualizer extends React.Component {
 							className="array-bar"
 							key={idx}
 							style={{
-								backgroundColor: colorArr[value],
+								backgroundColor: `hsl(${value}, 100%, 50%)`,
 								// height: `${75}vh`,
 							}}
 						></div>
